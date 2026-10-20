@@ -1,0 +1,9 @@
+streamlit==1.38.0
+pandas==2.3.3
+numpy==2.5.4
+scikit-learn==1.9.1
+scipy==1.18.1
+joblib==1.6.0
+plotly==7.1.0
+ml3-drift==0.0.5
+pytest==9.1.1
