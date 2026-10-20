@@ -1,8 +1,15 @@
 # DriftWatchdog
 
-Watches a real, already-deployed classifier for data drift - because most
-ML projects stop at training a model and never ask how you'd notice it
-silently decaying in production.
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![scikit--learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white) ![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+
+Watches a real, already-deployed classifier for data drift. It wraps a real
+MLP classifier and its 180-feature training distribution, injects synthetic
+production drift (a sensor change, added noise, a shifting population, a
+broken feature) at an adjustable intensity, detects it with a per-feature
+Kolmogorov-Smirnov test Bonferroni-corrected across all 180 features, and
+tracks the model's real accuracy on the same drifted batch - so the
+Timeline view shows the drift signal and the actual accuracy decay moving
+together.
 
 ## Screenshots
 
@@ -10,19 +17,7 @@ silently decaying in production.
 ![Watchdog](screenshots/watchdog.png)
 ![Timeline](screenshots/timeline.png)
 
-## How it works
-
-- Wraps the real MLP emotion classifier and its 180-feature training
-  distribution (reused from EmotionDetect, a sibling project).
-- Injects synthetic production drift - a sensor change, added noise, a
-  shifting population, a broken feature - at an adjustable intensity.
-- Detects it with a per-feature Kolmogorov-Smirnov test, Bonferroni-corrected
-  across all 180 features so it isn't flagging drift by chance.
-- Tracks the model's real accuracy on the same drifted batch, so the
-  "Timeline" view shows the drift signal and actual accuracy decay moving
-  together, not two independently faked numbers.
-
-## Running it locally
+## How to run
 
 ```bash
 python -m venv .venv
@@ -31,12 +26,4 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Tests
-
-```bash
-python -m pytest tests/ -v
-```
-
-## License
-
-MIT, see `LICENSE`. Statistical drift detection via ml3-drift (Apache-2.0).
+Tests: `python -m pytest tests/ -v`
